@@ -43,9 +43,10 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                             !isHome ? "is-not-home" : null
                         }`}
                         style={{
-                            ...(site.cover_image && {
-                                backgroundImage: `url(${site.cover_image})`,
-                            }),
+                            ...(site.cover_image &&
+                                isHome && {
+                                    backgroundImage: `url(${site.cover_image})`,
+                                }),
                         }}
                     >
                         <div className="container">
