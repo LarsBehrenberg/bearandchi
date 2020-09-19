@@ -20,11 +20,11 @@
     display: inline-block;
     padding: 5px 10px;
     color: #fff;
-    opacity: 0.7;
+    opacity: 1;
 
     &:hover {
         text-decoration: none;
-        opacity: 1;
+        opacity: 0.7;
     }
 }
 
@@ -55,10 +55,18 @@
 }
 
 .site-banner {
-    max-width: 80%;
     margin: 0 auto;
-    padding: 10vw 0;
-    text-align: center;
+    padding: 7vw 0;
+    text-align: left;
+
+    h1 {
+        border-bottom: 1px solid #fff;
+        max-width: 200px;
+    }
+
+    * {
+        max-width: 500px;
+    }
 }
 
 .site-banner-title {
@@ -74,7 +82,6 @@
     padding: 0;
     font-size: 2.4rem;
     line-height: 1.3em;
-    opacity: 0.7;
 }
 
 .site-banner-shadow {
@@ -106,9 +113,10 @@
     font-size: 1.3rem;
     line-height: 1em;
     border-radius: $radius;
-    opacity: 0.7;
+    opacity: 1;
 
     &:hover {
         text-decoration: none;
+        opacity: 0.7;
     }
 }
