@@ -83,14 +83,19 @@
 }
 
 .post-feature-image {
-    margin: -4vw 0 4vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 90vh;
 
+    .image-container,
     img {
-        margin: 0 0 3vw;
+        height: 100%;
         width: 100%;
-        height: 500px;
         object-fit: cover;
     }
+
 }
 
 .content-title {

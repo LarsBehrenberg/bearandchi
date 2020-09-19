@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Helmet } from "react-helmet";
-import { Link, StaticQuery, graphql } from "gatsby";
-import Img from "gatsby-image";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Helmet } from 'react-helmet'
+import { Link, StaticQuery, graphql } from 'gatsby'
+import Img from 'gatsby-image'
 
-import { Navigation } from ".";
-import config from "../../utils/siteConfig";
+import { Navigation } from '.'
+import config from '../../utils/siteConfig'
 
 // Styles
-import "../../styles/index.scss";
+import '../../styles/index.scss'
 
 /**
  * Main layout component
@@ -18,14 +18,14 @@ import "../../styles/index.scss";
  * styles, and meta data for each page.
  *
  */
-const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
-    const site = data.allGhostSettings.edges[0].node;
+const DefaultLayout = ({ data, children, bodyClass, isHome, content }) => {
+    const site = data.allGhostSettings.edges[0].node
     const twitterUrl = site.twitter
         ? `https://twitter.com/${site.twitter.replace(/^@/, ``)}`
-        : null;
+        : null
     const facebookUrl = site.facebook
         ? `https://www.facebook.com/${site.facebook.replace(/^\//, ``)}`
-        : null;
+        : null
 
     return (
         <>
@@ -40,194 +40,117 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                     {/* The main header section on top of the screen */}
                     <header
                         className={`site-head ${
-                            !isHome ? "is-not-home" : null
+                            !isHome ? 'is-not-home' : null
                         }`}
                         style={{
-                            ...(site.cover_image &&
-                                isHome && {
-                                    backgroundImage: `url(${site.cover_image})`,
-                                }),
+                            ...(content && content.feature_image_sharp
+                                ? {
+                                      backgroundImage: `url(${content.feature_image_sharp.url})`,
+                                  }
+                                : {
+                                      backgroundImage: `url(${site.cover_image})`,
+                                  }),
                         }}
                     >
                         <div className="container">
-                            {isHome ? (
-                                <>
-                                    <div className="site-mast">
-                                        <div className="site-mast-left">
-                                            <Link to="/">
-                                                {site.logo ? (
-                                                    <img
-                                                        className="site-logo"
-                                                        src={site.logo}
-                                                        alt={site.title}
-                                                    />
-                                                ) : (
-                                                    <Img
-                                                        fixed={
-                                                            data.file
-                                                                .childImageSharp
-                                                                .fixed
-                                                        }
-                                                        alt={site.title}
-                                                    />
-                                                )}
-                                            </Link>
-                                        </div>
-                                        <div className="site-mast-right">
-                                            {site.twitter && (
-                                                <a
-                                                    href={twitterUrl}
-                                                    className="site-nav-item"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    <img
-                                                        className="site-nav-icon"
-                                                        src="/images/icons/twitter.svg"
-                                                        alt="Twitter"
-                                                    />
-                                                </a>
-                                            )}
-                                            {site.facebook && (
-                                                <a
-                                                    href={facebookUrl}
-                                                    className="site-nav-item"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    <img
-                                                        className="site-nav-icon"
-                                                        src="/images/icons/facebook.svg"
-                                                        alt="Facebook"
-                                                    />
-                                                </a>
-                                            )}
-                                            <a
-                                                className="site-nav-item"
-                                                href={`https://feedly.com/i/subscription/feed/${config.siteUrl}/rss/`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <img
-                                                    className="site-nav-icon"
-                                                    src="/images/icons/rss.svg"
-                                                    alt="RSS Feed"
-                                                />
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div className="site-banner">
-                                        <h1 className="site-banner-title">
-                                            {site.title}
-                                        </h1>
-                                        <p className="site-banner-desc">
-                                            {site.description}
-                                        </p>
-                                    </div>
-
-                                    <nav className="site-nav">
-                                        <div className="site-nav-left">
-                                            {/* The navigation items as setup in Ghost */}
-                                            <Navigation
-                                                data={site.navigation}
-                                                navClass="site-nav-item"
+                            <div className="site-mast">
+                                <div className="site-mast-left">
+                                    <Link to="/">
+                                        {site.logo ? (
+                                            <img
+                                                className="site-logo"
+                                                src={site.logo}
+                                                alt={site.title}
                                             />
-                                        </div>
-                                        <div className="site-nav-right">
-                                            <Link
-                                                className="site-nav-button"
-                                                to="/about"
-                                            >
-                                                About
-                                            </Link>
-                                        </div>
-                                    </nav>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="site-mast">
-                                        <div className="site-mast-left">
-                                            <Link to="/">
-                                                {site.logo ? (
-                                                    <img
-                                                        className="site-logo"
-                                                        src={site.logo}
-                                                        alt={site.title}
-                                                    />
-                                                ) : (
-                                                    <Img
-                                                        fixed={
-                                                            data.file
-                                                                .childImageSharp
-                                                                .fixed
-                                                        }
-                                                        alt={site.title}
-                                                    />
-                                                )}
-                                            </Link>
-                                        </div>
-                                        <nav className="site-nav">
-                                            <div className="site-nav-left">
-                                                {/* The navigation items as setup in Ghost */}
-                                                <Navigation
-                                                    data={site.navigation}
-                                                    navClass="site-nav-item"
-                                                />
-                                            </div>
-                                            <div className="site-nav-right">
-                                                <Link
-                                                    className="site-nav-button"
-                                                    to="/about"
-                                                >
-                                                    About
-                                                </Link>
-                                            </div>
-                                        </nav>
-                                        <div className="site-mast-right">
-                                            {site.twitter && (
-                                                <a
-                                                    href={twitterUrl}
-                                                    className="site-nav-item"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    <img
-                                                        className="site-nav-icon"
-                                                        src="/images/icons/twitter.svg"
-                                                        alt="Twitter"
-                                                    />
-                                                </a>
-                                            )}
-                                            {site.facebook && (
-                                                <a
-                                                    href={facebookUrl}
-                                                    className="site-nav-item"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    <img
-                                                        className="site-nav-icon"
-                                                        src="/images/icons/facebook.svg"
-                                                        alt="Facebook"
-                                                    />
-                                                </a>
-                                            )}
-                                            <a
-                                                className="site-nav-item"
-                                                href={`https://feedly.com/i/subscription/feed/${config.siteUrl}/rss/`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <img
-                                                    className="site-nav-icon"
-                                                    src="/images/icons/rss.svg"
-                                                    alt="RSS Feed"
-                                                />
-                                            </a>
-                                        </div>
+                                        ) : (
+                                            <Img
+                                                fixed={
+                                                    data.file.childImageSharp
+                                                        .fixed
+                                                }
+                                                alt={site.title}
+                                            />
+                                        )}
+                                    </Link>
+                                </div>
+                                <nav className="site-nav">
+                                    <div className="site-nav-left">
+                                        {/* The navigation items as setup in Ghost */}
+                                        <Navigation
+                                            data={site.navigation}
+                                            navClass="site-nav-item"
+                                        />
                                     </div>
-                                </>
-                            )}
+                                    <div className="site-nav-right">
+                                        <Link
+                                            className="site-nav-button"
+                                            to="/about"
+                                        >
+                                            About
+                                        </Link>
+                                    </div>
+                                </nav>
+                                <div className="site-mast-right">
+                                    {site.twitter && (
+                                        <a
+                                            href={twitterUrl}
+                                            className="site-nav-item"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <img
+                                                className="site-nav-icon"
+                                                src="/images/icons/twitter.svg"
+                                                alt="Twitter"
+                                            />
+                                        </a>
+                                    )}
+                                    {site.facebook && (
+                                        <a
+                                            href={facebookUrl}
+                                            className="site-nav-item"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <img
+                                                className="site-nav-icon"
+                                                src="/images/icons/facebook.svg"
+                                                alt="Facebook"
+                                            />
+                                        </a>
+                                    )}
+                                    <a
+                                        className="site-nav-item"
+                                        href={`https://feedly.com/i/subscription/feed/${config.siteUrl}/rss/`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <img
+                                            className="site-nav-icon"
+                                            src="/images/icons/rss.svg"
+                                            alt="RSS Feed"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="site-banner">
+                                <div className="title-container">
+                                    <h1 className="site-banner-title">
+                                        {isHome
+                                            ? site.title
+                                            : content.title
+                                            ? content.title
+                                            : content.name}
+                                    </h1>
+                                    <p className="site-banner-desc">
+                                        {isHome
+                                            ? site.description
+                                            : content.excerpt
+                                            ? content.excerpt
+                                            : content.description}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div className="site-banner-shadow" />
                     </header>
@@ -243,7 +166,7 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                     <footer className="site-foot">
                         <div className="site-foot-nav container">
                             <div className="site-foot-nav-left">
-                                <Link to="/">{site.title}</Link> ©{" "}
+                                <Link to="/">{site.title}</Link> ©{' '}
                                 {new Date().getFullYear()}
                             </div>
                             <div className="site-foot-nav-right">
@@ -257,8 +180,8 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
 DefaultLayout.propTypes = {
     children: PropTypes.node.isRequired,
@@ -268,9 +191,9 @@ DefaultLayout.propTypes = {
         file: PropTypes.object,
         allGhostSettings: PropTypes.object.isRequired,
     }).isRequired,
-};
+}
 
-const DefaultLayoutSettingsQuery = (props) => (
+const DefaultLayoutSettingsQuery = props => (
     <StaticQuery
         query={graphql`
             query GhostSettings {
@@ -290,8 +213,8 @@ const DefaultLayoutSettingsQuery = (props) => (
                 }
             }
         `}
-        render={(data) => <DefaultLayout data={data} {...props} />}
+        render={data => <DefaultLayout data={data} {...props} />}
     />
-);
+)
 
-export default DefaultLayoutSettingsQuery;
+export default DefaultLayoutSettingsQuery

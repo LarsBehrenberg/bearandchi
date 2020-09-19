@@ -39,6 +39,30 @@ exports.sourceNodes = ({
                 })
         )
     })
+
+    const GhostTag = getNodesByType('GhostTag')
+    GhostTag.forEach(node => {
+        const imageUrl = node.feature_image
+        imageDownloads.push(
+            createRemoteFileNode({
+                url: imageUrl,
+                store,
+                cache,
+                createNode,
+                createNodeId,
+                reporter,
+            })
+                .then(result => {
+                    if (!result) {
+                        return reporter.warn(`Could not download ${imageUrl}`)
+                    }
+                    node.feature_image_sharp___NODE = result.id
+                })
+                .catch(err => {
+                    reporter.warn(err)
+                })
+        )
+    })
     return Promise.all(imageDownloads)
 }
 

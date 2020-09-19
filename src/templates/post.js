@@ -15,35 +15,28 @@ import { MetaData } from '../components/common/meta'
  */
 const Post = ({ data, location }) => {
     const post = data.ghostPost
-
-    console.log(post)
     return (
         <>
             <MetaData data={data} location={location} type="article" />
             <Helmet>
                 <style type="text/css">{`${post.codeinjection_styles}`}</style>
             </Helmet>
-            <Layout>
-                {post.feature_image_sharp ? (
+            <Layout content={post}>
+                {/* {post.feature_image_sharp ? (
                     <figure className="post-feature-image">
                         <Img
                             fluid={
                                 post.feature_image_sharp.childImageSharp.fluid
                             }
-                            style={{ maxHeight: '600px' }}
                             alt="Iamge title"
+                            className="image-container"
                         />
-                        {/* <img
-                                    src={post.feature_image}
-                                    alt={post.title}
-                                /> */}
+                        <div className="site-banner-shadow" />
                     </figure>
-                ) : null}
+                ) : null} */}
                 <div className="container">
                     <article className="content">
                         <section className="post-full-content">
-                            <h1 className="content-title">{post.title}</h1>
-
                             {/* The main post content */}
                             <section
                                 className="content-body load-external-scripts"

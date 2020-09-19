@@ -17,7 +17,14 @@ export const ghostTagFields = graphql`
         slug
         name
         visibility
-        feature_image
+        feature_image_sharp {
+            url
+            childImageSharp {
+                fluid(maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                }
+            }
+        }
         description
         meta_title
         meta_description
@@ -48,6 +55,7 @@ export const ghostPostFields = graphql`
         slug
         featured
         feature_image_sharp {
+            url
             childImageSharp {
                 fluid(maxWidth: 1920) {
                     ...GatsbyImageSharpFluid_withWebp
