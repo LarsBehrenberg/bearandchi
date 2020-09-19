@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet'
+import Img from 'gatsby-image'
 
 import { Layout } from '../components/common'
 import { MetaData } from '../components/common/meta'
@@ -15,6 +16,7 @@ import { MetaData } from '../components/common/meta'
 const Post = ({ data, location }) => {
     const post = data.ghostPost
 
+    console.log(post)
     return (
         <>
             <MetaData data={data} location={location} type="article" />
@@ -22,16 +24,23 @@ const Post = ({ data, location }) => {
                 <style type="text/css">{`${post.codeinjection_styles}`}</style>
             </Helmet>
             <Layout>
-                <div className="container">
-                    <article className="content">
-                        {post.feature_image ? (
-                            <figure className="post-feature-image">
-                                <img
+                {post.feature_image_sharp ? (
+                    <figure className="post-feature-image">
+                        <Img
+                            fluid={
+                                post.feature_image_sharp.childImageSharp.fluid
+                            }
+                            style={{ maxHeight: '600px' }}
+                            alt="Iamge title"
+                        />
+                        {/* <img
                                     src={post.feature_image}
                                     alt={post.title}
-                                />
-                            </figure>
-                        ) : null}
+                                /> */}
+                    </figure>
+                ) : null}
+                <div className="container">
+                    <article className="content">
                         <section className="post-full-content">
                             <h1 className="content-title">{post.title}</h1>
 

@@ -2,6 +2,46 @@ const path = require(`path`)
 const { postsPerPage } = require(`./src/utils/siteConfig`)
 const { paginate } = require(`gatsby-awesome-pagination`)
 
+// use gatsby-source-filesystem to create the nodes
+const { createRemoteFileNode } = require('gatsby-source-filesystem')
+
+// get all imageNodes
+exports.sourceNodes = ({
+    actions,
+    cache,
+    createNodeId,
+    getNodesByType,
+    store,
+    reporter,
+}) => {
+    const { createNode } = actions
+    const imageDownloads = []
+    const GhostPost = getNodesByType('GhostPost')
+    GhostPost.forEach(node => {
+        const imageUrl = node.feature_image
+        imageDownloads.push(
+            createRemoteFileNode({
+                url: imageUrl,
+                store,
+                cache,
+                createNode,
+                createNodeId,
+                reporter,
+            })
+                .then(result => {
+                    if (!result) {
+                        return reporter.warn(`Could not download ${imageUrl}`)
+                    }
+                    node.feature_image_sharp___NODE = result.id
+                })
+                .catch(err => {
+                    reporter.warn(err)
+                })
+        )
+    })
+    return Promise.all(imageDownloads)
+}
+
 /**
  * Here is the place where Gatsby creates the URLs for all the
  * posts, tags, pages and authors that we fetched from the Ghost site.
@@ -11,14 +51,20 @@ exports.createPages = async ({ graphql, actions }) => {
 
     const result = await graphql(`
         {
-            allGhostPost(sort: { order: ASC, fields: published_at }, filter: {slug: {ne: "data-schema"}}) {
+            allGhostPost(
+                sort: { order: ASC, fields: published_at }
+                filter: { slug: { ne: "data-schema" } }
+            ) {
                 edges {
                     node {
                         slug
                     }
                 }
             }
-            allGhostTag(sort: { order: ASC, fields: name }, filter: {slug: {ne: "data-schema"}}) {
+            allGhostTag(
+                sort: { order: ASC, fields: name }
+                filter: { slug: { ne: "data-schema" } }
+            ) {
                 edges {
                     node {
                         slug
@@ -27,7 +73,10 @@ exports.createPages = async ({ graphql, actions }) => {
                     }
                 }
             }
-            allGhostAuthor(sort: { order: ASC, fields: name }, filter: {slug: {ne: "data-schema"}}) {
+            allGhostAuthor(
+                sort: { order: ASC, fields: name }
+                filter: { slug: { ne: "data-schema" } }
+            ) {
                 edges {
                     node {
                         slug
@@ -36,7 +85,10 @@ exports.createPages = async ({ graphql, actions }) => {
                     }
                 }
             }
-            allGhostPage(sort: { order: ASC, fields: published_at }, filter: {slug: {ne: "data-schema"}}) {
+            allGhostPage(
+                sort: { order: ASC, fields: published_at }
+                filter: { slug: { ne: "data-schema" } }
+            ) {
                 edges {
                     node {
                         slug

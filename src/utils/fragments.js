@@ -47,7 +47,13 @@ export const ghostPostFields = graphql`
         title
         slug
         featured
-        feature_image
+        feature_image_sharp {
+            childImageSharp {
+                fluid(maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                }
+            }
+        }
         excerpt
         custom_excerpt
         visibility
