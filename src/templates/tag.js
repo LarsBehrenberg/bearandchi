@@ -20,10 +20,10 @@ const Tag = ({ data, location, pageContext }) => {
             <MetaData data={data} location={location} type="series" />
             <Layout content={tag}>
                 <div className="container">
-                    <header className="tag-header">
+                    {/* <header className="tag-header">
                         <h1>{tag.name}</h1>
                         {tag.description ? <p>{tag.description}</p> : null}
-                    </header>
+                    </header> */}
                     <section className="post-feed">
                         {posts.map(({ node }) => (
                             // The tag below includes the markup for each post - components/common/PostCard.js

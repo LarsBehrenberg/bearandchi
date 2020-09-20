@@ -24,9 +24,9 @@ const Author = ({ data, location, pageContext }) => {
     return (
         <>
             <MetaData data={data} location={location} type="profile" />
-            <Layout content={author}>
+            <Layout content={author} isHome isAuthor>
                 <div className="container">
-                    <header className="author-header">
+                    {/* <header className="author-header">
                         <div className="author-header-content">
                             <h1>{author.name}</h1>
                             {author.bio && <p>{author.bio}</p>}
@@ -71,7 +71,7 @@ const Author = ({ data, location, pageContext }) => {
                                 />
                             )}
                         </div>
-                    </header>
+                    </header> */}
                     <section className="post-feed">
                         {posts.map(({ node }) => (
                             // The tag below includes the markup for each post - components/common/PostCard.js

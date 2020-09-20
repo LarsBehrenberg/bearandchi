@@ -18,7 +18,14 @@ import '../../styles/index.scss'
  * styles, and meta data for each page.
  *
  */
-const DefaultLayout = ({ data, children, bodyClass, isHome, content }) => {
+const DefaultLayout = ({
+    data,
+    children,
+    bodyClass,
+    isHome,
+    content,
+    isAuthor,
+}) => {
     const site = data.allGhostSettings.edges[0].node
     const twitterUrl = site.twitter
         ? `https://twitter.com/${site.twitter.replace(/^@/, ``)}`
@@ -46,6 +53,10 @@ const DefaultLayout = ({ data, children, bodyClass, isHome, content }) => {
                             ...(content && content.feature_image_sharp
                                 ? {
                                       backgroundImage: `url(${content.feature_image_sharp.url})`,
+                                  }
+                                : isAuthor
+                                ? {
+                                      backgroundImage: `url(${content.cover_image})`,
                                   }
                                 : {
                                       backgroundImage: `url(${site.cover_image})`,
@@ -135,16 +146,30 @@ const DefaultLayout = ({ data, children, bodyClass, isHome, content }) => {
                             </div>
                             <div className="site-banner">
                                 <div className="title-container">
+                                    {isAuthor ? (
+                                        <div className="author-header-image">
+                                            {content.profile_image && (
+                                                <img
+                                                    src={content.profile_image}
+                                                    alt={content.name}
+                                                />
+                                            )}
+                                        </div>
+                                    ) : null}
                                     <h1 className="site-banner-title">
-                                        {isHome
+                                        {isHome && !isAuthor
                                             ? site.title
+                                            : isAuthor
+                                            ? content.name
                                             : content.title
                                             ? content.title
-                                            : content.name}
+                                            : `Our ${content.name} Posts`}
                                     </h1>
                                     <p className="site-banner-desc">
-                                        {isHome
+                                        {isHome && !isAuthor
                                             ? site.description
+                                            : isAuthor
+                                            ? content.bio
                                             : content.excerpt
                                             ? content.excerpt
                                             : content.description}

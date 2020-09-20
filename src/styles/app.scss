@@ -1142,12 +1142,17 @@ hr {
 }
 
 .author-header-image {
-    flex: 0 0 auto;
-    margin: 0 0 0 4vw;
+    // flex: 0 0 auto;
+    // margin: 0 0 0 4vw;
     height: 120px;
     width: 120px;
     border-radius: 100%;
     overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%
+    }
 }
 
 .author-header-meta {
@@ -1448,17 +1453,5 @@ hr {
     .author-header-image {
         height: 80px;
         width: 80px;
-    }
-}
-
-@media (max-width: 980px) {
-    .post-feed {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 680px) {
-    .post-feed {
-        grid-template-columns: 1fr;
     }
 }

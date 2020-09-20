@@ -23,6 +23,18 @@
     }
 }
 
+@media (max-width: 980px) {
+    .post-feed {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 680px) {
+    .post-feed {
+        grid-template-columns: 1fr;
+    }
+}
+
 .post-card-tags {
     padding: 0 1.5rem;
     margin: 0 0 5px 0;
