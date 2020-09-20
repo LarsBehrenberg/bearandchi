@@ -71,7 +71,7 @@
 }
 
 .site-logo {
-    height: 25px;
+    height: 35px;
 }
 
 .site-mast {
@@ -88,6 +88,10 @@
         &:last-child {
             padding-right: 0;
         }
+    }
+
+    @media (max-width: 550px) {
+        display: none;
     }
 }
 
