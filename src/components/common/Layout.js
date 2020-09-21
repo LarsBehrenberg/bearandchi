@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 import { Link, StaticQuery, graphql } from 'gatsby'
 import Img from 'gatsby-image'
 
-import { Navigation } from '.'
+import { Navigation, MobileMenu } from '.'
 import config from '../../utils/siteConfig'
 
 // Styles
@@ -42,7 +42,7 @@ const DefaultLayout = ({
                 <body className={bodyClass} />
             </Helmet>
 
-            <div className="viewport">
+            <div className="viewport" id="childWrapper">
                 <div className="viewport-top">
                     {/* The main header section on top of the screen */}
                     <header
@@ -102,6 +102,18 @@ const DefaultLayout = ({
                                     </div>
                                 </nav>
                                 <div className="site-mast-right">
+                                    <a
+                                        href="https://instagram.com/bearandchi"
+                                        className="site-nav-item"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <img
+                                            className="site-nav-icon"
+                                            src="/images/icons/instagram.svg"
+                                            alt="Instagram"
+                                        />
+                                    </a>
                                     {site.twitter && (
                                         <a
                                             href={twitterUrl}
@@ -143,6 +155,7 @@ const DefaultLayout = ({
                                         />
                                     </a>
                                 </div>
+                                <MobileMenu data={site.navigation} />
                             </div>
                             <div className="site-banner">
                                 <div className="title-container">
