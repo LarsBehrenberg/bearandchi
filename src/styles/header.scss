@@ -16,7 +16,6 @@
     }
 
     &.is-not-home {
-
         height: 90vh;
 
         .container {
@@ -34,7 +33,6 @@
             justify-content: center;
             position: relative;
 
-
             * {
                 text-align: center;
                 width: 100%;
@@ -45,10 +43,6 @@
             h1 {
                 margin-bottom: 2rem;
             }
-        }
-
-        .site-nav {
-            margin: 0;
         }
     }
 }
@@ -141,7 +135,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 15px 0 0 0;
+    margin: 0;
 }
 
 .site-nav-left {
